@@ -4,12 +4,16 @@ import path from 'path'
 import tailwindcss from '@tailwindcss/vite'
 
 export default defineConfig({
+  base: '/technical-test/',
+
   plugins: [vue(), tailwindcss()],
+
   resolve: {
     alias: {
       '@': path.resolve(__dirname, './src'),
     },
   },
+
   optimizeDeps: {
     include: [],
   },
