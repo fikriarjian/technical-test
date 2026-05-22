@@ -1,0 +1,68 @@
+@import "tailwindcss";
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@400;500;600;700&display=swap');
+
+body {
+  font-family: 'Montserrat', sans-serif;
+}
+
+@theme {
+  --color-dark-teal-50: #edf5f8;
+  --color-dark-teal-100: #dbebf0;
+  --color-dark-teal-200: #b7d7e1;
+  --color-dark-teal-300: #92c4d3;
+  --color-dark-teal-400: #6eb0c4;
+  --color-dark-teal-500: #4a9cb5;
+  --color-dark-teal-600: #3b7d91;
+  --color-dark-teal-700: #2c5e6d;
+  --color-dark-teal-800: #1e3e48;
+  --color-dark-teal-900: #0f1f24;
+  --color-dark-teal-950: #0a1619;
+
+  --color-black-custom-50: #e5e5ff;
+  --color-black-custom-100: #ccccff;
+  --color-black-custom-200: #9999ff;
+  --color-black-custom-300: #6666ff;
+  --color-black-custom-400: #3333ff;
+  --color-black-custom-500: #0000ff;
+  --color-black-custom-600: #0000cc;
+  --color-black-custom-700: #000099;
+  --color-black-custom-800: #000066;
+  --color-black-custom-900: #000033;
+  --color-black-custom-950: #000024;
+
+  --color-dim-grey-50: #f3f2f1;
+  --color-dim-grey-100: #e8e5e3;
+  --color-dim-grey-200: #d0cac8;
+  --color-dim-grey-300: #b9b0ac;
+  --color-dim-grey-400: #a19591;
+  --color-dim-grey-500: #8a7b75;
+  --color-dim-grey-600: #6e625e;
+  --color-dim-grey-700: #534a46;
+  --color-dim-grey-800: #37312f;
+  --color-dim-grey-900: #1c1917;
+  --color-dim-grey-950: #131110;
+
+  --color-platinum-50: #f1f3f3;
+  --color-platinum-100: #e3e8e6;
+  --color-platinum-200: #c7d1ce;
+  --color-platinum-300: #acb9b5;
+  --color-platinum-400: #90a29c;
+  --color-platinum-500: #748b83;
+  --color-platinum-600: #5d6f69;
+  --color-platinum-700: #46534f;
+  --color-platinum-800: #2e3835;
+  --color-platinum-900: #171c1a;
+  --color-platinum-950: #101312;
+
+  --color-taupe-50: #f4f2f1;
+  --color-taupe-100: #e9e4e2;
+  --color-taupe-200: #d3cac5;
+  --color-taupe-300: #bcafa9;
+  --color-taupe-400: #a6958c;
+  --color-taupe-500: #907a6f;
+  --color-taupe-600: #736259;
+  --color-taupe-700: #564943;
+  --color-taupe-800: #3a312c;
+  --color-taupe-900: #1d1816;
+  --color-taupe-950: #141110;
+}
