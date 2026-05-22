@@ -15,24 +15,80 @@ export interface User {
   gender?: string
 }
 
+const TOKEN_EXPIRED_KEY = 'token_expired_at'
+
 export const useAuthStore = defineStore('auth', () => {
   const token = ref<string>(localStorage.getItem('token') || '')
-  const user = ref<User | null>(JSON.parse(localStorage.getItem('user') || 'null'))
+  const user = ref<User | null>(
+    JSON.parse(localStorage.getItem('user') || 'null'),
+  )
 
   const loading = ref(false)
 
-  const isAuthenticated = computed(() => !!token.value)
+  let logoutTimer: ReturnType<typeof setTimeout> | null = null
+
+  const isAuthenticated = computed(() => {
+    if (!token.value) return false
+
+    const expiredAt = localStorage.getItem(TOKEN_EXPIRED_KEY)
+
+    if (!expiredAt) return false
+
+    return Date.now() < Number(expiredAt)
+  })
 
   function setAuth(newToken: string) {
     token.value = newToken
+
     localStorage.setItem('token', newToken)
 
+    // expired 1 jam
+    const expiredAt = Date.now() + 60 * 60 * 1000
+
+    localStorage.setItem(TOKEN_EXPIRED_KEY, expiredAt.toString())
+
     ApiService.setAuthToken(newToken)
+
+    startAutoLogoutTimer()
   }
 
   function setUser(userData: User) {
     user.value = userData
+
     localStorage.setItem('user', JSON.stringify(userData))
+  }
+
+  function startAutoLogoutTimer() {
+    if (logoutTimer) {
+      clearTimeout(logoutTimer)
+    }
+
+    const expiredAt = localStorage.getItem(TOKEN_EXPIRED_KEY)
+
+    if (!expiredAt) return
+
+    const remainingTime = Number(expiredAt) - Date.now()
+
+    if (remainingTime <= 0) {
+      logout()
+      return
+    }
+
+    logoutTimer = setTimeout(() => {
+      logout()
+    }, remainingTime)
+  }
+
+  function checkTokenExpiration() {
+    const expiredAt = localStorage.getItem(TOKEN_EXPIRED_KEY)
+
+    if (!expiredAt) return
+
+    if (Date.now() >= Number(expiredAt)) {
+      logout()
+    } else {
+      startAutoLogoutTimer()
+    }
   }
 
   async function login(username: string, password: string) {
@@ -87,6 +143,11 @@ export const useAuthStore = defineStore('auth', () => {
 
     localStorage.removeItem('token')
     localStorage.removeItem('user')
+    localStorage.removeItem(TOKEN_EXPIRED_KEY)
+
+    if (logoutTimer) {
+      clearTimeout(logoutTimer)
+    }
 
     delete axios.defaults.headers.common.Authorization
 
@@ -106,6 +167,9 @@ export const useAuthStore = defineStore('auth', () => {
     { immediate: true },
   )
 
+  // cek token expired
+  checkTokenExpiration()
+
   return {
     token,
     user,
@@ -117,5 +181,6 @@ export const useAuthStore = defineStore('auth', () => {
     fetchUser,
     setAuth,
     setUser,
+    checkTokenExpiration,
   }
 })

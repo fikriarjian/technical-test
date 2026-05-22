@@ -1,44 +1,85 @@
 <template>
-  <section class="bg-[#0B0B0B] py-10 px-6 lg:px-16">
+  <section class="bg-[#0B0B0B] py-10 px-4 sm:px-6 lg:px-16">
     <div class="max-w-[1800px] mx-auto">
+      <!-- Heading -->
       <div class="flex flex-col items-center justify-center mb-8">
         <div>
-          <h2 class="text-3xl lg:text-6xl font-bold text-white text-center mb-2">
+          <h2
+            class="text-2xl sm:text-4xl lg:text-6xl font-bold text-white text-center mb-2 leading-tight"
+          >
             "Shirtbox shop provide you the finest shirts <br />
             all over the world,,
           </h2>
-          <p class="text-[20px] text-center text-[#606060] mb-2">Best choose for your daily activities</p>
+
+          <p
+            class="text-[14px] sm:text-[16px] lg:text-[20px] text-center text-[#606060] mb-2"
+          >
+            Best choose for your daily activities
+          </p>
         </div>
       </div>
 
-      <div class="flex gap-4 items-end">
-        <!-- Previous Button -->
+      <!-- SLIDER WRAPPER -->
+      <div class="flex flex-col lg:items-end lg:flex-row gap-4">
+        <!-- Desktop Prev Button -->
         <button
           type="button"
           @click="prev"
           :disabled="!canPrev"
-          class="flex p-5 items-center justify-center bg-[#313131] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+          class="hidden lg:flex p-5 items-center justify-center bg-[#313131] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
         >
           <i class="ti ti-chevron-left text-2xl"></i>
         </button>
+
         <!-- Slide Container -->
-        <div class="relative overflow-hidden">
-          <div class="flex gap-4 transition-transform duration-500" :style="{ transform: `translateX(-${currentIndex * 25}%)` }">
-          <div v-for="(slide, index) in slides" :key="index" class="min-w-[100%] sm:min-w-[50%] lg:min-w-[25%] shrink-0">
-              <div class="overflow-hidden bg-[#151515] shadow-[0_22px_72px_-30px_rgba(0,0,0,0.8)]">
-                <img :src="slide.image" :alt="slide.title" class="w-full h-[286px] object-cover object-center" />
-                <div class="bg-[#2F2F2F]">
-                  <div class="flex items-center justify-between p-6">
-                    <span class="text-lg uppercase text-[#9CA3AF]">{{ slide.title }}</span>
-                    <span class="text-3xl font-bold text-white">${{ slide.price }}</span>
+        <div class="relative overflow-hidden flex-1">
+          <div
+            class="flex gap-4 transition-transform duration-500"
+            :style="{ transform: `translateX(-${currentIndex * 25}%)` }"
+          >
+            <div
+              v-for="(slide, index) in slides"
+              :key="index"
+              class="min-w-[100%] sm:min-w-[50%] lg:min-w-[25%] shrink-0"
+            >
+              <div
+                class="overflow-hidden bg-[#151515] shadow-[0_22px_72px_-30px_rgba(0,0,0,0.8)] h-full flex flex-col"
+              >
+                <img
+                  :src="slide.image"
+                  :alt="slide.title"
+                  class="w-full h-[240px] sm:h-[286px] object-cover object-center"
+                />
+
+                <div class="bg-[#2F2F2F] flex-1 flex flex-col">
+                  <div
+                    class="flex items-center justify-between p-4 sm:p-6 gap-3"
+                  >
+                    <span
+                      class="text-sm sm:text-lg uppercase text-[#9CA3AF]"
+                    >
+                      {{ slide.title }}
+                    </span>
+
+                    <span
+                      class="text-2xl sm:text-3xl font-bold text-white shrink-0"
+                    >
+                      ${{ slide.price }}
+                    </span>
                   </div>
-                  <hr class="border-[#4A4A4A]">
-                  <!-- <h3 class="text-xl font-semibold text-white mb-3">{{ slide.title }}</h3> -->
-                  <p class="text-sm leading-6 text-[#B3B3B3] p-6">{{ slide.description }}</p>
+
+                  <hr class="border-[#4A4A4A]" />
+
+                  <p
+                    class="text-xs sm:text-sm leading-6 text-[#B3B3B3] p-4 sm:p-6 flex-1"
+                  >
+                    {{ slide.description }}
+                  </p>
                 </div>
+
                 <button
                   type="button"
-                  class="w-full bg-[#3D916F] px-4 py-6 text-base font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-[#7B6DA0]"
+                  class="w-full bg-[#3D916F] px-4 py-4 sm:py-6 text-sm sm:text-base font-semibold uppercase tracking-[0.12em] text-white transition hover:bg-[#7B6DA0]"
                 >
                   Add to basket
                 </button>
@@ -46,15 +87,37 @@
             </div>
           </div>
         </div>
-        <!-- Next Button -->
+
+        <!-- Desktop Next Button -->
         <button
+          type="button"
+          @click="next"
+          :disabled="!canNext"
+          class="hidden lg:flex p-5 items-center justify-center bg-[#313131] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+        >
+          <i class="ti ti-chevron-right text-2xl"></i>
+        </button>
+
+        <!-- MOBILE/TABLET ARROWS -->
+        <div class="flex lg:hidden justify-center gap-4 mt-4">
+          <button
+            type="button"
+            @click="prev"
+            :disabled="!canPrev"
+            class="flex p-4 items-center justify-center bg-[#313131] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+          >
+            <i class="ti ti-chevron-left text-xl"></i>
+          </button>
+
+          <button
             type="button"
             @click="next"
             :disabled="!canNext"
-            class="flex p-5 items-center justify-center bg-[#313131] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
+            class="flex p-4 items-center justify-center bg-[#313131] text-white transition hover:bg-white/10 disabled:cursor-not-allowed disabled:opacity-40"
           >
-            <i class="ti ti-chevron-right text-2xl"></i>
+            <i class="ti ti-chevron-right text-xl"></i>
           </button>
+        </div>
       </div>
     </div>
   </section>
