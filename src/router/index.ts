@@ -1,5 +1,6 @@
 import { useAuthStore } from '@/stores/auth'
 import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
+import { useAppStore } from '@/stores/app'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -59,9 +60,13 @@ const router = createRouter({
 
 router.beforeEach((to, from, next) => {
   const authStore = useAuthStore()
+  const appStore = useAppStore()
+
+  appStore.showLoader()
+
   const isAuthenticated = authStore.isAuthenticated || !!localStorage.getItem('token')
 
-  // Check if the destination route or any of its parent routes require auth middleware
+  // Check if route requires auth
   const requiresAuth = to.matched.some((record) => record.meta.middleware === 'auth')
 
   if (requiresAuth) {
@@ -77,5 +82,12 @@ router.beforeEach((to, from, next) => {
   }
 })
 
-export default router
+router.afterEach(() => {
+  const appStore = useAppStore()
 
+  setTimeout(() => {
+    appStore.hideLoader()
+  }, 500)
+})
+
+export default router
