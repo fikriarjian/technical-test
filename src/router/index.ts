@@ -1,5 +1,5 @@
 import { useAuthStore } from '@/stores/auth'
-import { createRouter, createWebHistory, RouteRecordRaw } from 'vue-router'
+import { createRouter, createWebHashHistory, RouteRecordRaw } from 'vue-router'
 
 const routes: Array<RouteRecordRaw> = [
   {
@@ -45,7 +45,7 @@ const routes: Array<RouteRecordRaw> = [
 ]
 
 const router = createRouter({
-  history: createWebHistory((import.meta as any).env.BASE_URL),
+  history: createWebHashHistory('/technical-test/'),
   linkExactActiveClass: 'active',
   routes,
   scrollBehavior(to, from, savedPosition) {

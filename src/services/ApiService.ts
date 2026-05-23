@@ -15,7 +15,7 @@ declare global {
   }
 }
 
-const API_BASE = import.meta.env.VITE_API_BASE_URL
+const API_BASE = 'https://dummyjson.com'
 
 class ApiService {
   private static isTokenExpiredMessageShown = false
