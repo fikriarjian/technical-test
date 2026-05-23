@@ -2,7 +2,7 @@
   <section class="bg-[#0B0B0B] py-10 px-4 sm:px-6 lg:px-16">
     <div class="max-w-[1800px] mx-auto">
       <!-- Heading -->
-      <div class="flex flex-col items-center justify-center mb-8">
+      <div class="flex flex-col gap-4 items-center justify-center mb-14">
         <div>
           <h2
             class="text-2xl sm:text-4xl lg:text-6xl font-bold text-white text-center mb-2 leading-tight"
@@ -17,6 +17,7 @@
             Best choose for your daily activities
           </p>
         </div>
+        <hr class="border-2 border-[#3D916F] w-12 sm:w-16 lg:w-20" />
       </div>
 
       <!-- SLIDER WRAPPER -->
